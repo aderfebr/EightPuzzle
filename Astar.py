@@ -24,11 +24,20 @@ class Heuristic:
     def calculate(self,state):
         if self.mode==0:  # 深度优先算法
             return 0
-        if self.mode==1:  # 根据错位数估计
+        if self.mode==1:  # 根据错位数个数估计
             heuristic_value = 0
             for i in range(len(state)):
                 if state[i] != 0 and state[i] != self.goal_state[i]:
                     heuristic_value += 1
+            return heuristic_value
+        if self.mode==2:  # 根据错位数距离估计
+            heuristic_value = 0
+            for i in range(len(state)):
+                if state[i] != 0 and state[i] != self.goal_state[i]:
+                    j=self.goal_state.index(state[i])
+                    i_row, i_col = divmod(i, 3)
+                    j_row, j_col = divmod(j, 3)
+                    heuristic_value += abs(i_row-j_row)+abs(i_col-j_col)
             return heuristic_value
 
 class Astar:
@@ -41,7 +50,7 @@ class Astar:
 
     def search(self):
         frontier = []  # 开放列表
-        explored = set()  # 已探索的节点集合
+        explored = set()  # 关闭列表
         heapq.heappush(frontier, Node(self.initial_state))  
         self.generated_nodes += 1  # 初始节点被生成
 
@@ -55,9 +64,9 @@ class Astar:
             explored.add(tuple(node.state))  
 
             for successor in self.get_successors(node):  
-                self.generated_nodes += 1  # 每个后继节点被生成时增加计数
                 if tuple(successor.state) not in explored:  
                     heapq.heappush(frontier, successor)  
+                    self.generated_nodes += 1  # 每个后继节点被生成时增加计数
 
         return None  # 无解 
 

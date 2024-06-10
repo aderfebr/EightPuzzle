@@ -36,11 +36,14 @@ class EightPuzzle:
         restart_button = tk.Button(self.root, text="重置", command=self.restart_game)  
         restart_button.pack(side=tk.BOTTOM, fill=tk.X, padx=20, pady=10)
 
-        button1 = tk.Button(self.root, text="A*算法", command=lambda: Astar(self.board,1).output())  
-        button1.pack(side=tk.BOTTOM, fill=tk.X, padx=20, pady=10)
+        button = tk.Button(self.root, text="A*算法(错位数距离)", command=lambda: Astar(self.board,2).output())  
+        button.pack(side=tk.BOTTOM, fill=tk.X, padx=20, pady=10)
 
-        button2 = tk.Button(self.root, text="深度优先算法", command=lambda: Astar(self.board,0).output())  
-        button2.pack(side=tk.BOTTOM, fill=tk.X, padx=20, pady=10)
+        button = tk.Button(self.root, text="A*算法(错位数个数)", command=lambda: Astar(self.board,1).output())  
+        button.pack(side=tk.BOTTOM, fill=tk.X, padx=20, pady=10)
+
+        button = tk.Button(self.root, text="深度优先算法", command=lambda: Astar(self.board,0).output())  
+        button.pack(side=tk.BOTTOM, fill=tk.X, padx=20, pady=10)
 
         self.step_label = tk.Label(self.root, text="所用步数: 0", font=("Microsoft YaHei", 12))
         self.step_label.pack(side=tk.BOTTOM, fill=tk.X, pady=10)  
